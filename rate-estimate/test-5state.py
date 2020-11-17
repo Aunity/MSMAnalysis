@@ -34,8 +34,8 @@ def main():
     paras = Parameters(T, rateInit, lagtime, p0, maxTime)
 
     epsilon = 1e-10
-    learningRatio = 0.01
-    iterN = 500
+    learningRatio = 0.005
+    iterN = 1000
     lossValues, weightsList, rateBest = gradient_descent(paras, iterN=iterN, epsilon=epsilon, learningRatio=learningRatio)
 
     populationRef = gain_population_from_transition_matrix(T, p0, lagtime, maxTime)
@@ -49,8 +49,10 @@ def main():
     times = np.arange(0, maxTime, lagtime)
     _, ax = plot_compare(times, populationRef, populationInit, ax=axs[0])
     ax.set_ylim(0,1)
+    ax.set_title('init rate')
     _, ax = plot_compare(times, populationRef, populationBest, ax=axs[1])
     ax.set_ylim(0,1)
+    ax.set_title('estimated best rate')
 
     fig.tight_layout()
     fig.savefig('evolution.png', dpi=100)
